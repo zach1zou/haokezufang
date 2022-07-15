@@ -37,8 +37,8 @@ export default {
     async getUserToken() {
       // console.log(this.$store.state.user)
       const res = await userApi()
-      console.log(res.data.body)
-      console.log(res.data.body.nickname)
+      // console.log(res.data.body)
+      // console.log(res.data.body.nickname)
       this.imgSrc = `${request.defaults.baseURL}${res.data.body.avatar}`
       let ProfileimgSrc = res.data.body.avatar
       ProfileimgSrc = ProfileimgSrc.replace('img', 'img/profile')
