@@ -1,5 +1,5 @@
 <template>
-  <div>找房</div>
+  <div>搜索</div>
 </template>
 <script>
 export default {
