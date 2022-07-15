@@ -64,21 +64,20 @@ export default {
     },
     async onSubmit() {
       const res = await login(this.user)
-      //   console.log(res)
+
       try {
+        console.log(res)
+
+        this.$store.commit('setUser', res.data.data)
         this.$toast.success('登录成功')
 
         this.$router.push('/home/profile')
       } catch (error) {
-        if (res.status === 400) {
-          this.$toast.fail('传入的参数缺失')
-        } else if (res.status === 401) {
-          this.$toast.fail('用户的账号密码错误')
-        } else if (res.status === 401) {
-          this.$toast.fail('接口不存在')
-        } else {
-          this.$toast.fail('找不到页面')
+        console.log(error)
+        if (res.status === 400 || res.status === 401 || res === 404) {
+          this.$toast.fail(res.data.data)
         }
+        this.$toast.fail('传入的参数缺失')
       }
     }
   },
