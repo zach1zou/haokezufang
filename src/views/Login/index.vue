@@ -64,18 +64,17 @@ export default {
     },
     async onSubmit() {
       const res = await login(this.user)
-
+      console.log(res)
       try {
-        console.log(res)
-
-        this.$store.commit('setUser', res.data.data)
-        this.$toast.success('登录成功')
+        this.$toast.success(res.data.description)
+        console.log(res.data.body.token, '====================')
+        this.$store.commit('setUser', res.data.body.token)
 
         this.$router.push('/home/profile')
       } catch (error) {
         console.log(error)
         if (res.status === 400 || res.status === 401 || res === 404) {
-          this.$toast.fail(res.data.data)
+          this.$toast.fail(res.data.description)
         }
         this.$toast.fail('传入的参数缺失')
       }
