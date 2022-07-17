@@ -67,8 +67,8 @@ export default {
       console.log(res)
       try {
         this.$toast.success(res.data.description)
-        console.log(res.data.body.token, '====================')
-        this.$store.commit('setUser', res.data.body.token)
+
+        this.$store.commit('setUser', res.data.body)
 
         this.$router.push('/home/profile')
       } catch (error) {

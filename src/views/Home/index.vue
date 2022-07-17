@@ -14,6 +14,7 @@
           v-model="searchValue"
           label="北京"
           placeholder="请输入小区或地址"
+          @focus="focusFn"
         >
         </van-search>
         <van-icon name="map-marked" />
@@ -116,6 +117,10 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 点击搜索跳转
+    focusFn() {
+      this.$router.push('/city')
     }
   },
   mounted() {
@@ -235,5 +240,8 @@ export default {
       border-radius: 15px;
     }
   }
+}
+body {
+  overflow: hidden;
 }
 </style>

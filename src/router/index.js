@@ -30,6 +30,14 @@ const routes = [
         component: () => import('@/views/ProFile')
       }
     ]
+  },
+  {
+    path: '/favorate',
+    component: () => import('@/views/ProFile/Favorites/favoriteList.vue')
+  },
+  {
+    path: '/city',
+    component: () => import('@/views/Home/City/city.vue')
   }
 ]
 

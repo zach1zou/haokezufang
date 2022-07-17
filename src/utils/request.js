@@ -14,7 +14,7 @@ request.interceptors.request.use(
       // console.log(store.state.user, 'token')
       // config.headers.Authorization = 'Bearer ' + store.state.user.token
       // config.headers.Authorization = localStorage.getItem('HK-Token')
-      config.headers.Authorization = store.state.user
+      config.headers.Authorization = store.state.user.token
     }
     return config
   },

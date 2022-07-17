@@ -14,3 +14,17 @@ export const userApi = () => {
     url: '/user'
   })
 }
+// 我的用户退出接口
+export const loginout = () => {
+  return request({
+    method: 'post',
+    url: '/user/logout'
+  })
+}
+// 我的收藏列表接口
+export const favoriteListApi = () => {
+  return request({
+    method: 'GET',
+    url: '/user/favorites'
+  })
+}
