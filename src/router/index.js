@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     component: () => import('@/views/Layout'),
-    redirect: '/home',
+    redirect: '/login',
     children: [
       {
         path: '/home',
@@ -36,8 +36,17 @@ const routes = [
     component: () => import('@/views/ProFile/Favorites/favoriteList.vue')
   },
   {
+    path: '/rent',
+    component: () => import('@/views/ProFile/Rent/RentList.vue')
+  },
+  {
     path: '/city',
     component: () => import('@/views/Home/City/city.vue')
+  },
+  {
+    name: 'details',
+    path: '/details/:username',
+    component: () => import('@/views/Compoments/HouseCode.vue')
   }
 ]
 

@@ -17,6 +17,7 @@
         :title="item.label"
         v-for="(item, index) in hotCityList"
         :key="index"
+        @click="Togo(index)"
       />
       <!-- 城市列表数据 -->
       <div v-for="(CityListVal, CityListKey) in cityList" :key="CityListKey">
@@ -24,7 +25,10 @@
           >{{ CityListKey }}
         </van-index-anchor>
         <div v-for="cityListval in CityListVal" :key="cityListval.label">
-          <van-cell :title="cityListval.label" />
+          <van-cell
+            :title="cityListval.label"
+            @click="TogoHome(cityListval.label)"
+          />
         </div>
       </div>
     </van-index-bar>
@@ -32,6 +36,7 @@
 </template>
 <script>
 import { cityApi, hotCityApi } from '@/api/area'
+import { pinyin } from 'pinyin-pro'
 
 export default {
   props: {
@@ -77,7 +82,14 @@ export default {
 
       // 按照字母排序城市
       const cityList = {}
-      let SortCityList = data.body.map(function (val) {
+      const SortCity = data.body.sort((c1, c2) => {
+        return pinyin(c1.pinyin, { pattern: 'first' }) <
+          pinyin(c2.pinyin, { pattern: 'first' })
+          ? -1
+          : 1
+      })
+      console.log(SortCity, '===排序城市')
+      let SortCityList = SortCity.map(function (val) {
         const firstName = val.pinyin.substr(0, 1).toUpperCase()
         if (firstName in cityList) {
           cityList[firstName].push(val)
@@ -95,6 +107,20 @@ export default {
     async getHotCityList() {
       const { data } = await hotCityApi()
       this.hotCityList = data.body
+      console.log(data.body)
+    },
+    // 点击跳回
+    async Togo(index) {
+      const { data } = await hotCityApi()
+      console.log(data.body, '点击')
+      this.$store.commit('changeCityName', data.body[index].label)
+
+      this.$router.back()
+    },
+    async TogoHome(val) {
+      await hotCityApi()
+      this.$store.commit('changeCityName', val)
+      this.$router.back()
     }
   },
 

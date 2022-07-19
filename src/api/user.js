@@ -28,3 +28,10 @@ export const favoriteListApi = () => {
     url: '/user/favorites'
   })
 }
+// 查看已经发布房源的的列表接口
+export const RentListApi = () => {
+  return request({
+    method: 'GET',
+    url: '/user/houses'
+  })
+}

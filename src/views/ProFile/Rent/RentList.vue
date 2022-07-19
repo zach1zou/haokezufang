@@ -2,14 +2,8 @@
   <div>
     <!-- 导航栏 -->
     <NavBar :title="title"></NavBar>
-
-    <!-- 收藏列表 -->
-    <div
-      class="favlist"
-      v-for="(item, index) in FavoriteList"
-      :key="index"
-      @click="RouterToFn(item.houseCode)"
-    >
+    <!-- 我的出租 -->
+    <div class="favlist" v-for="(item, index) in RentList" :key="index">
       <div class="favlistImg">
         <img :src="item.houseImg" alt="" />
       </div>
@@ -34,8 +28,8 @@
 <script>
 import NavBar from '@/views/Compoments/NavBar.vue'
 
+import { RentListApi } from '@/api/user'
 import request from '@/utils/request'
-import { favoriteListApi } from '@/api/user'
 export default {
   props: {
     arr: {
@@ -50,36 +44,21 @@ export default {
   components: { NavBar },
   data() {
     return {
-      FavoriteList: [],
-      title: '我的收藏'
+      title: '房屋管理',
+      RentList: []
     }
   },
   methods: {
-    async getFavoriteList() {
-      try {
-        const { data } = await favoriteListApi()
-        this.FavoriteList = data.body
-        console.log(data.body)
-        data.body.forEach((val) => {
-          val.houseImg = request.defaults.baseURL + val.houseImg
-        })
-
-        // console.log(this.FavoriteList, data.body.houseImg)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    RouterToFn(houseCode) {
-      this.$router.push({
-        name: 'details',
-        params: {
-          username: houseCode
-        }
+    async getRentList() {
+      const { data } = await RentListApi()
+      this.RentList = data.body
+      data.body.forEach((val) => {
+        val.houseImg = request.defaults.baseURL + val.houseImg
       })
     }
   },
   mounted() {
-    this.getFavoriteList()
+    this.getRentList()
   },
   updated() {},
   beforeDestroy() {},
@@ -89,7 +68,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-// 收藏列表
+// 我的出租
+
 .favlist {
   display: flex;
   height: 300px;

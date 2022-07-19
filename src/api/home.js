@@ -6,3 +6,14 @@ export const banner = () => {
     url: '/home/swiper'
   })
 }
+
+// 租房小组
+export const RentGroup = (id) => {
+  return request({
+    method: 'get',
+    url: '/home/groups',
+    params: {
+      area: id
+    }
+  })
+}

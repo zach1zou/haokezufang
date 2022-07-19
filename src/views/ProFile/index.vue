@@ -39,7 +39,7 @@
         <van-grid-item text="我的收藏" to="/favorate">
           <template #icon><van-icon name="star-o" /> </template>
         </van-grid-item>
-        <van-grid-item text="我的出租">
+        <van-grid-item text="我的出租" to="/rent">
           <template #icon><van-icon name="wap-home-o" /> </template>
         </van-grid-item>
         <van-grid-item text="看房记录">
@@ -83,7 +83,7 @@ export default {
     async getUserToken() {
       try {
         const { data } = await userApi()
-        // console.log(data.body, this.$store.state.user.token)
+        console.log(data.body, this.$store.state.user.token)
         this.userList.imgSrc = request.defaults.baseURL + data.body.avatar
 
         this.userList.nickname = data.body.nickname

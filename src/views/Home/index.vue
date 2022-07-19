@@ -12,7 +12,7 @@
         <van-search
           class="van-search"
           v-model="searchValue"
-          label="北京"
+          :label="$store.state.cityName"
           placeholder="请输入小区或地址"
           @focus="focusFn"
         >
@@ -59,19 +59,23 @@
     <div class="renting-container">
       <p>租房小组<span>更多</span></p>
       <div class="renting-container-box">
-        <div class="renting-container-box-inner">1</div>
-        <div class="renting-container-box-inner">2</div>
-        <div class="renting-container-box-inner">3</div>
-        <div class="renting-container-box-inner">4</div>
+        <div
+          class="renting-container-box-inner"
+          v-for="item in HomeGroupList"
+          :key="item.id"
+        >
+          <div><img :src="item.imgSrc" alt="" /></div>
+          <div class="item-container">
+            <span>{{ item.title }}</span>
+            <span>{{ item.desc }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-// import img1 from '@/assets/images/1.png'
-// import img2 from '@/assets/images/2.png'
-// import img3 from '@/assets/images/3.png'
-import { banner } from '@/api/home'
+import { banner, RentGroup } from '@/api/home'
 import request from '@/utils/request'
 
 export default {
@@ -89,7 +93,8 @@ export default {
   data() {
     return {
       images: [],
-      searchValue: ''
+      searchValue: '',
+      HomeGroupList: []
     }
   },
   methods: {
@@ -121,10 +126,21 @@ export default {
     // 点击搜索跳转
     focusFn() {
       this.$router.push('/city')
+    },
+    // 获取租房小组
+    async HomeGroup() {
+      const { data } = await RentGroup('88cff55c-aaa4-e2e0')
+      console.log(data.body)
+
+      data.body.forEach((val) => {
+        val.imgSrc = request.defaults.baseURL + val.imgSrc
+      })
+      this.HomeGroupList = data.body
     }
   },
   mounted() {
     this.getBannerList()
+    this.HomeGroup()
   },
   updated() {},
   beforeDestroy() {},
@@ -227,21 +243,30 @@ export default {
     }
   }
   .renting-container-box {
-    height: 280px;
-
+    height: 300px;
+    width: 100%;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
     .renting-container-box-inner {
-      margin-top: 20px;
-      background-color: white;
-      width: 47%;
-      border-radius: 15px;
+      width: 50%;
+      height: 50%;
+      display: flex;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      .item-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20px;
+
+        span {
+          font-size: 28px;
+        }
+      }
     }
   }
-}
-body {
-  overflow: hidden;
 }
 </style>
